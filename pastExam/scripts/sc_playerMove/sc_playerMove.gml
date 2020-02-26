@@ -22,15 +22,11 @@ right	= tilemap_get_at_pixel(tileId, bbox_right, bbox_bottom - 16 );
 //중력 및 점프//
 ///////////////
 
+//밟고있는 타일에 따라 isJump값 지정
+if ( ( bottom1 == 2 && bottom2 != 2 ) || bottom1 == 3 ) isJump = false;
+else isJump = true;
 
-//2단계 타일과 플레이어 바닥의 충돌
-if ( bottom1 == 2 && bottom2 != 2  && ySpeed > 0 ) {
-	ySpeed = 0;
-	if ( bbox_bottom % 64 > 0 ) y -= bbox_bottom % 64;
-}
-
-//3단계 타일과 플레이어 바닥의 충돌
-if ( bottom1 == 3 ) {
+if ( !isJump && ySpeed > 0 ) {
 	ySpeed = 0;
 	if ( bbox_bottom % 64 > 0 ) y -= bbox_bottom % 64;
 }
@@ -40,7 +36,7 @@ if ( top = 3 ) { if ( ySpeed < 0 ) ySpeed = 5; }
 
 //점프
 if ( keyJump ) { 
-	if ( ( ( bottom1 == 2 && !bottom2 != 2 ) || bottom1 == 3 ) && canMove = true ) ySpeed = jumpSpeed;
+	if ( !isJump && canMove ) ySpeed = jumpSpeed;
 }
 
 
@@ -48,6 +44,11 @@ if ( keyJump ) {
 if ( ySpeed > ob_game.gravmax ) ySpeed = ob_game.gravmax;
 y = y + ySpeed;
 ySpeed += ob_game.grav;
+
+//점프 스프라이트
+if ( isJump ) {
+	if ( ySpeed < 0 ) sprite_index = sp_playerUp;
+}
 
 
 ////////
@@ -79,9 +80,6 @@ if ( canMove ) {
 		//좌우 이동
 		if ( keyLeft && ( xSpeed > -walkSpeed ) )	{ xSpeed -= accSpeed; }
 		if ( keyRight && ( xSpeed < walkSpeed ) )	{ xSpeed += accSpeed; }
-		//좌우 대쉬
-		if ( keyLeftDash )	{ xSpeed = -dashSpeed; }
-		if ( keyRightDash )	{ xSpeed = dashSpeed; }
 	}
 }
 
@@ -94,7 +92,7 @@ x = x + xSpeed;
 
 //이동 입력 없을시 정지
 if ( !keyLeft && !keyRight ) {
-	sprite_index = sp_playerStand;
+	if ( !isJump ) sprite_index = sp_playerStand;
 	if ( xSpeed > accSpeed )		xSpeed -= accSpeed;
 	else if ( xSpeed < -accSpeed )	xSpeed += accSpeed;
 	else							xSpeed = 0;
@@ -103,3 +101,17 @@ if ( !keyLeft && !keyRight ) {
 ////////
 //공격//
 ////////
+
+if ( canMove ) {
+	if ( keyAttack ) {
+		canMove = false;
+		atkProcess = 1;
+	}
+}
+
+if ( atkProcess > 0 ) {
+	switch ( weaponR ) {
+		case 0: sc_atk0000(); break;
+		case 1: break;
+	}
+}

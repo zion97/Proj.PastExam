@@ -8,6 +8,7 @@
 keyLeft			= false;
 keyRight		= false;
 keyJump			= false;
+keyAttack		= false;
 
 if ( keyboard_check_released(vk_left) )		{ keyLeftDash = false; }
 if ( keyboard_check_released(vk_right) )	{ keyRightDash = false; }
@@ -15,6 +16,7 @@ if ( keyboard_check_released(vk_right) )	{ keyRightDash = false; }
 if ( keyboard_check(vk_left) )			{ keyLeft	= true; }
 if ( keyboard_check(vk_right) )			{ keyRight	= true; }
 if ( keyboard_check( ord("C") ) )		{ keyJump	= true; }
+if ( keyboard_check( ord("X") ) )		{ keyAttack = true; }
 
 if ( keyboard_check_pressed(vk_left) ) {
 	if ( keyDbClick >= 0 ) {

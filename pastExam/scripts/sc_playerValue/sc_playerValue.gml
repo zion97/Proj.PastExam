@@ -15,21 +15,18 @@ keyJump			= false;	//점프
 keyLeftDash		= false;	//좌로대쉬
 keyRightDash	= false;	//우로대쉬
 keyDbClick		= -1;		//더블클릭 채크
+keyAttack		= false;
 
 
 ///////////////////
 //플레이어 기본정보//
 ///////////////////
 
-playerHP	= 100;
-maxHP		= playerHP;
-playerMP	= 50;
-maxMP		= playerMP;
 dir			= 1;
 walkSpeed	= 6;
 dashSpeed	= 9;
 accSpeed	= 0.8;
-jumpSpeed	= -14;
+jumpSpeed	= -14.4;
 
 
 ////////////////
@@ -41,3 +38,12 @@ isJump		= false;			//점프중인지
 xSpeed		= 0;				//X축 스피드
 ySpeed		= 0;				//Y축 스피드
 sprite_index = sp_playerStand;	//스프라이트
+
+
+////////////
+//액션 변수//
+////////////
+
+atkProcess	= 0;				//공격 모션
+weaponR		= 0;				//주무기
+weaponL		= 0;				//보조무기
